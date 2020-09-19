@@ -8,7 +8,7 @@ public class Parser {
     public ArrayList<Auto> txtToDB(InputStream in) {
         Scanner scanner = new Scanner(in);
         String buffer;
-        ArrayList<Auto> list = new ArrayList<Auto>();
+        ArrayList<Auto> list = new ArrayList<>();
         while (scanner.hasNext()) {
             buffer = scanner.nextLine();
             String[] param = buffer.split(",");
@@ -16,7 +16,7 @@ public class Parser {
                 param[i] = param[i].replaceAll("\\W", "");
             }
             try {
-                Auto auto = new Auto(Integer.valueOf(param[2]), param[0], param[1], param[3]);
+                Auto auto = new Auto(Integer.parseInt(param[2]), param[0], param[1], param[3]);
                 list.add(auto);
             } catch (Exception e) {
                 System.out.println("\nDB FILE IS BROKEN, CREATING NEW DATA BASE");
