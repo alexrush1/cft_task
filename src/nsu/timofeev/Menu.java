@@ -19,11 +19,12 @@ public class Menu {
             System.out.println("2. Add new auto");
             System.out.println("0. Exit\n");
             System.out.print("~base: ");
-            int mode = in.nextInt();
+            String mode = in.next();
             switch (mode) {
-                case 1 -> base.printBase(in);
-                case 2 -> base.addAutoManual(in);
-                case 0 -> System.exit(0);
+                case "1" -> base.printBase(in);
+                case "2" -> base.addAutoManual(in);
+                case "0" -> System.exit(0);
+                default -> System.out.println("WRONG INPUT");
             }
         }
     }

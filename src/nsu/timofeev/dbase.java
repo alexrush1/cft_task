@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 class dbase {
     private ArrayList<Auto> base = new ArrayList<>();
@@ -21,12 +22,21 @@ class dbase {
                 for (int i = 0; i < base.size(); i++) {
                     System.out.printf("%d. %s %s (%d)\n", i + 1, base.get(i).getManufacturer(), base.get(i).getModel(), base.get(i).getYear());
                 }
-                System.out.print("Choose auto (0 to main menu): ");
-                int ans = in.nextInt();
-                if (ans == 0) {
-                    break;
+                int ans;
+                while (true) {
+                    try {
+                        System.out.print("Choose auto (0 to main menu): ");
+                        ans = in.nextInt();
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("WRONG INPUT");
+                        in.nextLine();
+                    }
                 }
-                infoMore(ans - 1, in);
+                    if (ans == 0) {
+                        break;
+                    }
+                    infoMore(ans - 1, in);
             }
         }
     }
@@ -39,11 +49,13 @@ class dbase {
             System.out.printf("Year: %d\n", base.get(ans).getYear());
             System.out.printf("Body Type: %s", base.get(ans).getBodyType());
             System.out.print("\n1.Edit info\n2.Delete auto\n0.Back to list\n~base: ");
-            int ans2 = in.nextInt();
+            String ans2 = in.next();
             switch (ans2) {
-                case 1: editInfo(ans, in); break;
-                case 2: delAuto(ans); return;
-                case 0: return;
+                case "1": editInfo(ans, in); break;
+                case "2": delAuto(ans); return;
+                case "0": return;
+                default:
+                    System.out.println("WRONG INPUT");
             }
         }
     }
@@ -54,35 +66,42 @@ class dbase {
             Auto element = base.get(index);
             System.out.printf("\nCurrent: %s %s (%d, %s)\n", element.getManufacturer(), element.getModel(), element.getYear(), element.getBodyType());
 
-            System.out.print("\nEdit: \n1.Manufacturer\n2.Model\n3.Year\n4.Body Type\n~base: ");
-            int ans = in.nextInt();
+            System.out.print("\nEdit: \n1.Manufacturer\n2.Model\n3.Year\n4.Body Type\n0.Back\n~base: ");
+            String ans = in.next();
             String buffer;
 
             switch (ans) {
-                case 1:
+                case "1":
                     System.out.print("New manufacturer: ");
                     buffer = in.next();
                     element.setManufacturer(buffer);
                     break;
-                case 2:
+                case "2":
                     System.out.print("New model: ");
                     buffer = in.next();
                     element.setModel(buffer);
                     break;
-                case 3:
-                    System.out.print("New year: ");
-                    buffer = in.next();
-                    element.setYear(Integer.parseInt(buffer));
+                case "3":
+                    while (true) {
+                        try {
+                            System.out.print("New year: ");
+                            buffer = in.next();
+                            element.setYear(Integer.parseInt(buffer));
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("WRONG INPUT");
+                        }
+                    }
                     break;
-                case 4:
+                case "4":
                     System.out.print("New body type (cabrio/sedan/coupe/suv/pickup/crossover): ");
                     buffer = in.next();
                     element.setBodyType(buffer);
                     break;
-                case 0:
+                case "0":
                     return;
                 default:
-                    System.out.println("Wrong number");
+                    System.out.println("WRONG INPUT");
                     break;
             }
             base.set(index, element);
@@ -102,8 +121,17 @@ class dbase {
         String man = in.next();
         System.out.print("Model: ");
         String model = in.next();
-        System.out.print("Year: ");
-        int year = in.nextInt();
+        int year = 0;
+        while (true) {
+            try {
+                System.out.print("Year: ");
+                year = in.nextInt();
+                break;
+            } catch (Exception e) {
+                System.out.println("WRONG INPUT! ONLY DIGITS");
+                in.nextLine();
+            }
+        }
         System.out.print("Body Type (cabrio/sedan/coupe/suv/pickup/crossover): ");
         String body = in.next();
         Auto auto = new Auto(year, man, model, body);
