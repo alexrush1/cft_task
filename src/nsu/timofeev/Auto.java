@@ -1,10 +1,10 @@
 package nsu.timofeev;
 
 class Auto {
-    private final int year;
-    private final String manufacturer;
-    private final String model;
-    private final String bodyType;
+    private int year;
+    private String manufacturer;
+    private String model;
+    private String bodyType;
 
     public Auto(int year, String man, String model, String body) {
         this.year = year;
@@ -25,4 +25,9 @@ class Auto {
     public String getBodyType() {
         return bodyType;
     }
+
+    public void setYear(int year) {this.year = year; }
+    public void setModel(String model) {this.model = model; }
+    public void setManufacturer(String manufacturer) {this.manufacturer = manufacturer; }
+    public void setBodyType(String bodyType) { this.bodyType = bodyType; }
 }

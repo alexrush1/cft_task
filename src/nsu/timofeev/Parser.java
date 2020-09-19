@@ -15,9 +15,15 @@ public class Parser {
             for (int i = 0; i < 4; i++) {
                 param[i] = param[i].replaceAll("\\W", "");
             }
-            Auto auto = new Auto(Integer.valueOf(param[2]), param[0], param[1], param[3]);
-            list.add(auto);
+            try {
+                Auto auto = new Auto(Integer.valueOf(param[2]), param[0], param[1], param[3]);
+                list.add(auto);
+            } catch (Exception e) {
+                System.out.println("\nDB FILE IS BROKEN, CREATING NEW DATA BASE");
+                list.clear();
+            }
         }
+        System.out.printf("\nDB FILE LOADED SUCCESSFULLY (%d ENTITIES FOUND)\n", list.size());
         return list;
     }
     public void dbToTxt(ArrayList<Auto> list) throws IOException {
