@@ -111,11 +111,13 @@ class dbase {
         saveTxt();
     }
 
-    private void loadTxt() throws IOException {
+    private void loadTxt() {
         Parser parser = new Parser();
-        InputStream file = new FileInputStream("db");
-        base = parser.txtToDB(file);
-        file.close();
+        try {
+            InputStream file = new FileInputStream("db");
+            base = parser.txtToDB(file);
+            file.close();
+        } catch (Exception e) {}
     }
 
     private void saveTxt() throws IOException {

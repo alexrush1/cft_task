@@ -19,11 +19,12 @@ public class Parser {
                 Auto auto = new Auto(Integer.parseInt(param[2]), param[0], param[1], param[3]);
                 list.add(auto);
             } catch (Exception e) {
-                System.out.println("\nDB FILE IS BROKEN, CREATING NEW DATA BASE");
+                System.out.println("\nDB FILE IS BROKEN, DATABASE NOW IS EMPTY");
                 list.clear();
             }
         }
-        System.out.printf("\nDB FILE LOADED SUCCESSFULLY (%d ENTITIES FOUND)\n", list.size());
+        int size = list.size();
+        if (size > 0) System.out.printf("\nDB FILE LOADED SUCCESSFULLY (%d ENTITIES FOUND)\n", size);
         return list;
     }
     public void dbToTxt(ArrayList<Auto> list) throws IOException {
