@@ -1,10 +1,18 @@
 package nsu.timofeev;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 class dbase {
     private ArrayList<Auto> base = new ArrayList<Auto>();
+
+    public dbase() throws IOException {
+        loadTxt();
+    }
 
     public void printBase(Scanner in) {
         if (base.size() == 0) {
@@ -45,7 +53,7 @@ class dbase {
         System.out.printf("\nDELETED!\n");
     }
 
-    public void addAuto(Scanner in) {
+    public void addAutoManual(Scanner in) throws IOException {
         System.out.println("\nAdding new auto\n");
         System.out.print("Manufacturer: ");
         String man = in.next();
@@ -57,5 +65,18 @@ class dbase {
         String body = in.next();
         Auto auto = new Auto(year, man, model, body);
         base.add(auto);
+        saveTxt();
+    }
+
+    private void loadTxt() throws IOException {
+        Parser parser = new Parser();
+        InputStream file = new FileInputStream("db");
+        base = parser.txtToDB(file);
+        file.close();
+    }
+
+    private void saveTxt() throws IOException {
+        Parser parser = new Parser();
+        parser.dbToTxt(base);
     }
 }
